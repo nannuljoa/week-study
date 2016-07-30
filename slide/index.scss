@@ -1,11 +1,28 @@
 @import "../@common/css/_reset";
-[data-ui-slide] .controller a.active{ background-color:#f00; color:#fff; }
-[data-ui-slide] .slide-area{ overflow:hidden; height:115px; position:relative; border:1px solid #ccc; margin-top:10px;}
-[data-ui-slide] .slide-item{ text-align:center; height:115px;}
+.slide{
+	.controller{
+		a.active{ background-color:#f00; color:#fff; }
+	}
 
+	.view{
+		.view-list{
+			overflow:hidden;
+			height:115px;
+			position:relative;
+			margin-top:10px;
+			border:1px solid #ccc;
 
+			.view-item{
+				text-align:center;
+				width:100%; height:115px;
+				position:absolute; top:0; left:0; z-index:0;
+				display:none;
 
-
-
-
-
+				&.active{
+					display:block;
+					z-index:1;
+				}
+			}
+		}
+	}
+}
