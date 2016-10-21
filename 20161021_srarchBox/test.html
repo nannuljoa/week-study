@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8"/>
+	<meta name="viewport" content="width=1024"/>
+	<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible"/>
+	<meta name="robots" content="index, follow" />
+	<link rel="stylesheet" href="https://www.donorscamp.org/common/styles/base.css" />
+	<link rel="stylesheet" href="https://www.donorscamp.org/common/styles/layout.css" />
+	<link rel="stylesheet" href="https://www.donorscamp.org/common/styles/style.css" />
+	<link rel="stylesheet" href="https://www.donorscamp.org/common/styles/contents.css" />
+	<link rel="stylesheet" href="https://www.donorscamp.org/common/styles/jquery-ui.css" type="text/css" media="all"/>
+	<script type="text/javascript" src="https://www.donorscamp.org/common/scripts/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="https://www.donorscamp.org/common/scripts/jquery/jquery-ui.min.js"></script>
+	<title></title>
+	<style type="text/css">
+		.searchBox {position: relative; width: 500px; margin: 0 auto 50px; border: 1px solid #CCC; padding: 50px;}
+		.searchBox .search1 {margin-bottom: 30px;}
+		.searchBox .search1 input {width: 450px;}
+		.searchBox .search1 a {display: inline-block; margin-left: 10px; padding: 5px; border: 1px solid #CCC;}
+		.searchBox .searchList {display: none; position: absolute; top: 83px; left: 50px; width: 420px; padding: 15px; background: #EEE; border: 1px solid #CCC;}
+		.searchBox .searchList .closeBtn2 {position: absolute; top: 10px; right: 10px; display: block; width: 30px; height: 20px; background: #333; text-align: center; font-size: 11px; color: #FFF;}
+		.searchBox .selectList {display: none;}
+	</style>
+</head>
+<body>
+	<div class="searchBox">
+		<p class="search1"><input type="text" id="text" class="inputText"><a href="#" class="searchBtn">검색</a></p>
+		<div class="searchList">
+			<ul>
+				<li><a href="#">홍길동</a></li>
+			</ul>
+			<a href="#" class="closeBtn2">닫기</a>
+		</div>
+		<div class="selectList">
+			<ul>
+				<li>홍길동</li>
+			</ul>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		(function($){
+
+			function showLayer(item) {
+				$(item).css('display', 'block');
+			}
+
+			function HideLayer(item) {
+				$(item).css('display', 'none');
+			}
+
+			function ShowList(item) {
+				$(item).css('display', 'block');
+			}
+
+			function focusItem(item) {
+				$(item).focus();
+			}
+
+			// 검색버튼 클릭시 레이어팝업 생성
+			$(document).on('click', '.searchBtn', function(e){
+				e.preventDefault();
+				showLayer('.searchList');
+			});
+
+			// 닫기버튼 클릭시 레이어팝업 삭제
+			$(document).on('click', '.closeBtn2', function(e){
+				e.preventDefault();
+				HideLayer('.searchList');
+				focusItem('.inputText');
+			});
+
+			// 레이어 팝업의 명단을 선택했을 때
+			$(document).on('click', '.searchList ul li a', function(e){
+				e.preventDefault();
+				HideLayer('.searchList');
+				ShowList('.selectList');
+			});
+
+			// 레이어팝업 외 영역 클릭시 레이어팝업 닫힘
+			$(document).mousedown(function(e) {
+				$('.searchList').each(function() {
+					if( $(this).css('display') == 'block' ) {
+						var objPos = $(this).offset();
+						objPos.right = (objPos.left + $(this).outerWidth());
+						objPos.bottom = (objPos.top + $(this).outerHeight());
+						if( e.pageX < objPos.left || e.pageX > objPos.right
+						|| e.pageY < objPos.top || e.pageY > objPos.bottom ) {
+							$(this).css('display', 'none');
+							$(this).prev().find('.inputText').focus();
+						}
+					}
+				});
+			});
+
+		}(window.jQuery));
+	</script>
+
+</body>
+</html>
